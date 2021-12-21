@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+
+
 #define TXT 1024
 #define WORD 30
 #define TRUE 1
 #define FALSE 0
-
-char word[WORD];
+const int abc[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 
+                     's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
 const char l[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const  char d[26] = "abcdefghijklmnopqrstuwxyz";
 
@@ -36,11 +38,12 @@ void insertText(char text[TXT]){
 
 int gematria(char c){
     for(int i = 0 ; i < 26; i++){
-        if(c == d[i] || c == l[i]){ 
+        if(c == abc[i] || c == abc[i] - 32){ // For example: a = 97 - 32 -> A = 65 
             return i + 1;
         }
     }
     return 0;
+
 }
 
 void gematriaSequences(char word[WORD], char text[TXT]){
@@ -102,10 +105,10 @@ void atbash(char from[WORD], char to[WORD]){
     int i = 0;
     for(int j = 0; from[j] != '\0'; j++){
         int place = gematria(from[j]) - 1;
-        if(l[place] != from[j]){
-            to[j] = l[26 - 1 - place] - 32;
+        if(abc[place] != from[j]){
+            to[j] = abc[26 - 1 - place] - 32;
         }else{
-            to[j] = l[26 - 1 - place];
+            to[j] = abc[26 - 1 - place];
         }
         i++;
     }
