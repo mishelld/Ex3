@@ -1,16 +1,12 @@
 #include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-
 
 #define TXT 1024
 #define WORD 30
 #define TRUE 1
 #define FALSE 0
+
 const int abc[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 
                      's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-const char l[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const  char d[26] = "abcdefghijklmnopqrstuwxyz";
 
 void insertWord(char word[WORD]){
     int count = 0;
@@ -43,33 +39,28 @@ int gematria(char c){
         }
     }
     return 0;
+}
 
+int gematriaOfWord(char word[WORD]){
+    int sum = 0;
+    int i = 0;
+    while(word[i] != '\0'){
+        sum += gematria(word[i]);
+        i++;
+    }
+    return sum;
 }
 
 void gematriaSequences(char word[WORD], char text[TXT]){
     printf("Gematria Sequences: ");
-    int wordGematria = 0;
-    int i = 0;
-    while (word[i] != '\0')
-    {
-        if (isalpha(word[i]))
-        {
-            wordGematria += word[i] - 97 + 1;
-        }
-        else if (isupper(word[i]))
-        {
-            wordGematria += word[i] - 65 + 1;
-        }
-        ++i;
-    }
-    int need = wordGematria;
+    int need = gematriaOfWord(word);
     int firstPrint = TRUE;
     for(int i = 0; text[i] != '\0'; i++){
         if(gematria(text[i]) > 0){
             int sum = 0;
             int keep = TRUE;
             for(int j = i; keep; j++){
-                sum = sum + gematria(text[j]);
+                sum += gematria(text[j]);
                 if(sum == need){
                     if(!firstPrint){
                         printf("~");
